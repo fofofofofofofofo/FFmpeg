@@ -213,6 +213,8 @@ static int http_open_cnx_internal(URLContext *h, AVDictionary **options)
                  proxy_path && av_strstart(proxy_path, "http://", NULL);
 
     if (!strcmp(proto, "https")) {
+        if (use_proxy && proxy_path)
+            setenv("http_proxy", proxy_path, 1);
         lower_proto = "tls";
         use_proxy   = 0;
         if (port < 0)
